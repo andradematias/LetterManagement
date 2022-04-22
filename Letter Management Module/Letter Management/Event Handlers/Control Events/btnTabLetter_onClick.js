@@ -1,0 +1,1 @@
+VV.Form.SetFieldValue('Tab Control', control.value);
