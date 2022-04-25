@@ -164,6 +164,11 @@ module.exports.main = async function (ffCollection, vvClient, response) {
         let FormTemplateName = getFieldValueByName('Form Template Name');
         let FormTemplateID = getFieldValueByName('Form Template ID');
 
+        //This variable must contain the name of the field that contains the email address.
+        let EmailFieldName = getFieldValueByName('Email Field Name');
+
+        //We force the first letter to be lowercase, since all the variables returned by the getForms function are lowercase.
+        EmailFieldName = EmailFieldName.charAt(0).toLowerCase() + EmailFieldName.slice(1);
 
         /****************************
          Unused Form Record Variables
@@ -192,7 +197,7 @@ module.exports.main = async function (ffCollection, vvClient, response) {
             .then((res) => checkDataPropertyExists(res, shortDescription));
 
         if (getFormsRes.data.length !== 0) {
-            RecipientEmail = getFormsRes.data[0]["email Address"];
+            RecipientEmail = getFormsRes.data[0][EmailFieldName];
         }
 
         //Step 2. Return of the email found
