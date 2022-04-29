@@ -1,11 +1,11 @@
-//AddExams on License Application
+//AddComunnicationLog
 
-//Template GUID goes here
-const templateId = '9784ef20-69ff-eb11-a9cf-a7c45ba94e73';
-//Test comm log
-//const templateId = '5bbea924-161b-ec11-8208-ef9d412ac617';
+//Template GUID "Communication Log" goes here
+const templateId = '8b95e0a8-3bc7-ec11-a9da-bc51b0e8489a';
 
-//Form fields go here
+/*********************
+Form Record Variables
+**********************/
 const IndividualID = VV.Form.GetFieldValue('Individual ID');
 const LetterHTML = VV.Form.GetFieldValue('Letter HTML');
 const Subject = VV.Form.GetFieldValue('Subject of Template');
@@ -16,7 +16,11 @@ const FacilityID = VV.Form.GetFieldValue('Facility ID');
 const Recipient = VV.Form.GetFieldValue('Recipient Email');
 const CommType = VV.Form.GetFieldValue('Communication Type');
 
-let IDToPass;
+/****************
+Config Variables
+*****************/
+let sendDate = new Date().toISOString();
+let IDToPass = "";
 
 if (LicenseID) {
     IDToPass = LicenseID;
@@ -57,7 +61,30 @@ const fieldMappings = [
         sourceFieldValue: Recipient,
         targetFieldName: 'Email Recipients'
     },
+    {
+        sourceFieldValue: 'Immediate Send',
+        targetFieldName: 'Email Type'
+    },
+    {
+        sourceFieldValue: 'Yes',
+        targetFieldName: 'Approved'
+    },
+    {
+        sourceFieldValue: sendDate,
+        targetFieldName: 'Scheduled Date'
+    },
+    {
+        sourceFieldValue: 'Send New',
+        targetFieldName: 'Communication Type Filter'
+    },
+    {
+        sourceFieldValue: 'True',
+        targetFieldName: 'Form Saved'
+    },
 ];
 
 //Call the fill in global script
 VV.Form.Global.FillinAndRelateForm(templateId, fieldMappings);
+
+
+
