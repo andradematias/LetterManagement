@@ -1,13 +1,13 @@
 //AddComunnicationLog
 
 //Template GUID "Communication Log" goes here
-const templateId = '8b95e0a8-3bc7-ec11-a9da-bc51b0e8489a';
+const templateId = 'fea8c68c-18ca-ec11-a9da-bc51b0e8489a';
 
 /*********************
 Form Record Variables
 **********************/
 const IndividualID = VV.Form.GetFieldValue('Individual ID');
-const LetterHTML = VV.Form.GetFieldValue('Letter HTML');
+let LetterHTML = VV.Form.GetFieldValue('Letter HTML');
 const Subject = VV.Form.GetFieldValue('Subject of Template');
 const LicenseID = VV.Form.GetFieldValue('License Details ID');
 const DisciplinaryID = VV.Form.GetFieldValue('Disciplinary Event ID');
@@ -33,6 +33,8 @@ if (LicenseID) {
 } else if (IndividualID) {
     IDToPass = IndividualID;
 }
+
+LetterHTML = LetterHTML.replace(/\s+/g, '');
 
 //Field mappings
 const fieldMappings = [

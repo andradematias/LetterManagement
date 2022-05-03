@@ -116,6 +116,7 @@ module.exports.main = async function (vvClient, response, token) {
 
                 // Temp fix: Only look for procom, visualvault, uat, and nebraska recipients for now
                 const recipients = String(locItem['email Recipients']).toLowerCase();
+                //if (recipients.includes('procom') || recipients.includes('visualvault') || recipients.includes('uat') || recipients.includes('nebraska.gov')) {
                 if (recipients.includes('procom') || recipients.includes('visualvault') || recipients.includes('uat') || recipients.includes('nebraska.gov')) {
                     //For each communications log to send: 
                     //1. Fetch the documents that are related to the communications log

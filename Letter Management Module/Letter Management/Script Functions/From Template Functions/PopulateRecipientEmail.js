@@ -25,6 +25,6 @@ function sendEmail() {
     var modalBody = "Do you really want to send this letter as an email?"
 
     // BuildIt,ModalTitle,ModalBody,ShowCloseButton,ShowOkButton,OkButtonTitle,OkButtonCallback   
-    VV.Form.Global.MessageModal(false, 'Send Email', modalBody, true, true, 'Ok', VV.Form.Global.AddCommunicationLog, 'Cancel')
+    VV.Form.Global.MessageModal(false, 'Send Email', modalBody, true, true, 'Ok', VV.Form.Template.SendEmail, 'Cancel')
 }
 //BuildIt,ModalTitle,ModalBody,ShowCloseButton,ShowOkButton,OkButtonTitle,OkButtonCallback,CloseButtonText,ThirdButton,ThirdButtonText,ThirdButtonCallback

@@ -19,66 +19,149 @@ module.exports.getCredentials = function () {
 }
 module.exports.main = async function (ffCollection, vvClient, response) {
     /*Script Name:   LetterManagementSendEmail
-     Customer:      Nebraska, DHHS
-     Purpose:       The purpose of this process is to create and add a new facility.
-     Parameters:
-     Return Array:
+    Customer:      
+    Purpose:       The purpose of this process is to create a Communication Log.
+    Parameters:
+    Return Array:
                     1. Status: 'Success', 'Minor Error', 'Error'
                     2.  Message
-                        i. 'User Created' if the user was created'
-                        ii. 'User Disabled' if the user was already disabled
-                        iii. 'User Exists' if the user already created and enabled
-                        iv. If 'Minor Error', send back the minor error response.
+                    i. 'User Created' if the user was created'
+                    ii. 'User Disabled' if the user was already disabled
+                    iii. 'User Exists' if the user already created and enabled
+                    iv. If 'Minor Error', send back the minor error response.
                     3. Object with help text loaded up
-     Psuedo code: 
-                1.  Create the facility form and relate it
-     Last Rev Date: 08/18/21
-     Revision Notes:
-     08/18/21 - Alex Rhee: Script created
-     1/12/2022 - Fabian Montero: Updated send date to be UTC ISO String
-     */
+    Psuedo code: 
+                    1.  Create the facility form and relate it
+                    2. Create the communication log
+                    3. Return outputCollection Array
+                    
+    Revision Notes:
+                    08/18/21 - Alex Rhee: Script created
+                    1/12/2022 - Fabian Montero: Updated send date to be UTC ISO String
+                    05/03/22 - Matías Andrade: Code refactoring.
+    */
 
     logger.info('Start of the process LetterManagementSendEmail at ' + Date());
 
     /****************
      Config Variables
-    *****************/
+     *****************/
     let CommunicationLogTemplateID = 'Communications Log';
     let OrganizationEmployeeTemplateID = 'Organization Employees';
     let FacilityEmployeeTemplateID = 'Facility Employees';
     let errorMessageGuidance = 'Please try again or contact a system administrator if this problem continues.';
     let missingFieldGuidance = 'Please provide a value for the missing field and try again, or contact a system administrator if this problem continues.';
     let sendDate = new Date().toISOString();
+    let IDToPass = "";
 
     /****************
      Script Variables
-    *****************/
+     *****************/
     let outputCollection = [];
     let errorLog = [];
     let EmailArray = [];
 
-    try {
+    /****************
+     Helper Functions
+    *****************/
 
-        /****************
-         Helper Functions
-        *****************/
-        // Check if field object has a value property and that value is truthy before returning value.
-        function getFieldValueByName(fieldName, isOptional) {
-            try {
-                let fieldObj = ffCollection.getFormFieldByName(fieldName);
-                let fieldValue = fieldObj && (fieldObj.hasOwnProperty('value') ? fieldObj.value : null);
+    // Check if field object has a value property and that value is truthy before returning value.
+    function getFieldValueByName(fieldName, isOptional) {
+        try {
+            let fieldObj = ffCollection.getFormFieldByName(fieldName);
+            let fieldValue = fieldObj && (fieldObj.hasOwnProperty('value') ? fieldObj.value : null);
 
-                if (fieldValue === null && !isOptional) {
-                    throw new Error(`${fieldName}`);
-                }
-                if (!isOptional && !fieldValue) {
-                    throw new Error(`${fieldName}`);
-                }
-                return fieldValue;
-            } catch (error) {
-                errorLog.push(error.message);
+            if (fieldValue === null) {
+                throw new Error(`${fieldName}`);
+            }
+            if (!isOptional && !fieldValue) {
+                throw new Error(`${fieldName}`);
+            }
+            return fieldValue;
+        } catch (error) {
+            errorLog.push(error.message);
+        }
+    }
+
+    function parseRes(vvClientRes) {
+        /*
+        Generic JSON parsing function
+        Parameters:
+                vvClientRes: JSON response from a vvClient API method
+        */
+        try {
+            // Parses the response in case it's a JSON string
+            const jsObject = JSON.parse(vvClientRes);
+            // Handle non-exception-throwing cases:
+            if (jsObject && typeof jsObject === "object") {
+                vvClientRes = jsObject;
+            }
+        } catch (e) {
+            // If an error ocurrs, it's because the resp is already a JS object and doesn't need to be parsed
+        }
+        return vvClientRes;
+    }
+
+    function checkMetaAndStatus(
+        vvClientRes,
+        shortDescription,
+        ignoreStatusCode = 999
+    ) {
+        /*
+        Checks that the meta property of a vvCliente API response object has the expected status code
+        Parameters:
+                vvClientRes: Parsed response object from a vvClient API method
+                shortDescription: A string with a short description of the process
+                ignoreStatusCode: An integer status code for which no error should be thrown. If you're using checkData(), make sure to pass the same param as well.
+        */
+        if (!vvClientRes.meta) {
+            throw new Error(
+                `${shortDescription} error. No meta object found in response. Check method call parameters and credentials.`
+            );
+        }
+
+        const status = vvClientRes.meta.status;
+
+        // If the status is not the expected one, throw an error
+        if (status != 200 && status != 201 && status != ignoreStatusCode) {
+            const errorReason =
+                vvClientRes.meta.errors && vvClientRes.meta.errors[0]
+                    ? vvClientRes.meta.errors[0].reason
+                    : "unspecified";
+            throw new Error(
+                `${shortDescription} error. Status: ${vvClientRes.meta.status}. Reason: ${errorReason}`
+            );
+        }
+        return vvClientRes;
+    }
+
+    function checkDataPropertyExists(
+        vvClientRes,
+        shortDescription,
+        ignoreStatusCode = 999
+    ) {
+        /*
+        Checks that the data property of a vvCliente API response object exists 
+        Parameters:
+                res: Parsed response object from the API call
+                shortDescription: A string with a short description of the process
+                ignoreStatusCode: An integer status code for which no error should be thrown. If you're using checkMeta(), make sure to pass the same param as well.
+        */
+        const status = vvClientRes.meta.status;
+
+        if (status != ignoreStatusCode) {
+            // If the data property doesn't exist, throw an error
+            if (!vvClientRes.data) {
+                throw new Error(
+                    `${shortDescription} data property was not present. Please, check parameters and syntax. Status: ${status}.`
+                );
             }
         }
+
+        return vvClientRes;
+    }
+
+    try {
 
         /*********************
          Form Record Variables
@@ -86,14 +169,12 @@ module.exports.main = async function (ffCollection, vvClient, response) {
         let RevisionID = getFieldValueByName('REVISIONID');
         let OrganizationID = getFieldValueByName('Organization ID', true);
         let IndividualID = getFieldValueByName('Individual ID', true);
-        let LicenseApplicationID = getFieldValueByName('License Application ID', true);
         let DisciplinaryID = getFieldValueByName('Disciplinary Event ID', true);
         let FacilityID = getFieldValueByName('Facility ID', true);
         let LicenseID = getFieldValueByName('License Details ID', true);
         let LetterHTML = getFieldValueByName('Letter HTML');
         let Subject = getFieldValueByName('Subject of Template');
         let Recipient = getFieldValueByName('Recipient Email', true);
-        //let Tokens = getFieldValueByName('Tokens');
         let CommType = getFieldValueByName('Communication Type');
 
         if (LicenseID) {
@@ -119,19 +200,20 @@ module.exports.main = async function (ffCollection, vvClient, response) {
         //Step 1. Find Organization Employees for admin/owner emails
 
         if (OrganizationID) {
-            orgEmployeeQuery = `[Organization ID] eq '${OrganizationID}' and ([Is Owner] eq 'True' or [Is Administrator] eq 'True')`;
+            let orgEmployeeQuery = `[Organization ID] eq '${OrganizationID}' and ([Is Owner] eq 'True' or [Is Administrator] eq 'True')`;
 
             let orgEmployeeQueryObj = {
                 q: orgEmployeeQuery,
                 expand: true,
             };
 
-            let getOrgEmployeeResp = await vvClient.forms.getForms(orgEmployeeQueryObj, OrganizationEmployeeTemplateID);
-            getOrgEmployeeResp = JSON.parse(getOrgEmployeeResp);
+            let getOrgEmployeeResp = await vvClient.forms.getForms(orgEmployeeQueryObj, OrganizationEmployeeTemplateID)
+                .then((res) => parseRes(res))
+                .then((res) => checkMetaAndStatus(res, `There was an error when calling getForms. ${errorMessageGuidance}`))
+                .then((res) => checkDataPropertyExists(res, `Data was not able to be returned when calling getForms. ${errorMessageGuidance}`));
+
             let getOrgEmployeeData = (getOrgEmployeeResp.hasOwnProperty('data') ? getOrgEmployeeResp.data : null);
 
-            if (getOrgEmployeeResp.meta.status !== 200) { throw new Error(`There was an error when calling getForms. ${errorMessageGuidance}`) }
-            if (getOrgEmployeeData === null) { throw new Error(`Data was not able to be returned when calling getForms. ${errorMessageGuidance}`) }
             if (getOrgEmployeeData.length > 0) {
                 for (const rec of getOrgEmployeeData) {
                     if (EmailArray.indexOf(rec['employee Email']) < 0) {
@@ -142,19 +224,20 @@ module.exports.main = async function (ffCollection, vvClient, response) {
         }
 
         if (FacilityID) {
-            facEmployeeQuery = `[Facility ID] eq '${FacilityID}' and ([Is Owner] eq 'True' or [Is Administrator] eq 'True')`;
+            let facEmployeeQuery = `[Facility ID] eq '${FacilityID}' and ([Is Owner] eq 'True' or [Is Administrator] eq 'True')`;
 
             let facEmployeeQueryObj = {
                 q: facEmployeeQuery,
                 expand: true,
             };
 
-            let getFacEmployeeResp = await vvClient.forms.getForms(facEmployeeQueryObj, FacilityEmployeeTemplateID);
-            getFacEmployeeResp = JSON.parse(getFacEmployeeResp);
+            let getFacEmployeeResp = await vvClient.forms.getForms(facEmployeeQueryObj, FacilityEmployeeTemplateID)
+                .then((res) => parseRes(res))
+                .then((res) => checkMetaAndStatus(res, `There was an error when calling getForms. ${errorMessageGuidance}`))
+                .then((res) => checkDataPropertyExists(res, `Data was not able to be returned when calling getForms. ${errorMessageGuidance}`));
+
             let getFacEmployeeData = (getFacEmployeeResp.hasOwnProperty('data') ? getFacEmployeeResp.data : null);
 
-            if (getFacEmployeeResp.meta.status !== 200) { throw new Error(`There was an error when calling getForms. ${errorMessageGuidance}`) }
-            if (getFacEmployeeData === null) { throw new Error(`Data was not able to be returned when calling getForms. ${errorMessageGuidance}`) }
             if (getFacEmployeeData.length > 0) {
                 for (const rec of getFacEmployeeData) {
                     if (EmailArray.indexOf(rec['employee Email']) < 0) {
@@ -169,7 +252,7 @@ module.exports.main = async function (ffCollection, vvClient, response) {
         }
 
 
-        //Step 3. Create the communication log
+        //Step 2. Create the communication log
         let fieldsObject = {
             'Email Body': LetterHTML,
             'Primary Record ID': IDToPass,
@@ -190,16 +273,11 @@ module.exports.main = async function (ffCollection, vvClient, response) {
             { name: 'UPDATEFIELDS', value: fieldsObject }
         ];
 
-        let postFormsTaskResp = await vvClient.scripts.runWebService('LibFormUpdateorPostandRelateForm', updateObj);
-        let postFormsTaskData = (postFormsTaskResp.hasOwnProperty('data') ? postFormsTaskResp.data : null);
+        let postFormsTaskResp = await vvClient.scripts.runWebService('LibFormUpdateorPostandRelateForm', updateObj)
+            .then((res) => checkMetaAndStatus(res, `There was an error when calling LibFormUpdateorPostandRelateForm. ${errorMessageGuidance}`))
+            .then((res) => checkDataPropertyExists(res, `Data was not able to be returned when calling LibFormUpdateorPostandRelateForm. ${errorMessageGuidance}`));
 
-        if (postFormsTaskResp.meta.status !== 200) {
-            throw new Error(`An error was encountered when attempting to create the ${ChecklistTaskTemplateID} record. 
-                    (${postFormsTaskResp.hasOwnProperty('meta') ? postFormsTaskResp.meta.statusMsg : postFormsTaskResp.message})`)
-        }
-        if (!postFormsTaskData) {
-            throw new Error(`Data was not returned when calling postForms.`)
-        }
+        let postFormsTaskData = (postFormsTaskResp.hasOwnProperty('data') ? postFormsTaskResp.data : null);
 
         if (IDToPass) {
             let relateResp = await vvClient.forms.relateFormByDocId(postFormsTaskData[2].revisionId, IDToPass);
@@ -214,7 +292,6 @@ module.exports.main = async function (ffCollection, vvClient, response) {
         outputCollection[1] = "Facility found.";
         outputCollection[2] = postFormsTaskData[2].revisionId;
 
-
     } catch (error) {
         console.log(error);
         // Log errors captured.
@@ -227,4 +304,3 @@ module.exports.main = async function (ffCollection, vvClient, response) {
         response.json(200, outputCollection)
     }
 }
-

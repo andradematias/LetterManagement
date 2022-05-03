@@ -18,48 +18,53 @@ module.exports.getCredentials = function () {
     return options;
 }
 module.exports.main = async function (ffCollection, vvClient, response) {
-    /*Script Name:   PopulateRecipientEmail
-     Customer:      //
-     Purpose:       The purpose of this process is to see if the requester has a registered email and return it in the outputCollection variable.
-     Parameters:
-     Return Array:
+    /*Script Name:   LetterManagementSendEmail
+    Customer:      Nebraska, DHHS
+    Purpose:       The purpose of this process is to create a Communication Log.
+    Parameters:
+    Return Array:
                     1. Status: 'Success', 'Minor Error', 'Error'
                     2.  Message
-                        i. 'User Created' if the user was created'
-                        ii. 'User Disabled' if the user was already disabled
-                        iii. 'User Exists' if the user already created and enabled
-                        iv. If 'Minor Error', send back the minor error response.
-     Psuedo code: 
-                1. The email of the requesting user is obtained
-                2. Return of the email found
-     Last Rev Date: 
-     Revision Notes:
-     04/22/2022 - Creation of the web service.
-     */
+                    i. 'User Created' if the user was created'
+                    ii. 'User Disabled' if the user was already disabled
+                    iii. 'User Exists' if the user already created and enabled
+                    iv. If 'Minor Error', send back the minor error response.
+                    3. Object with help text loaded up
+    Psuedo code: 
+                    1.  Create the facility form and relate it
+                    2. Create the communication log
+                    3. Return outputCollection Array
+                    
+    Revision Notes:
+                    08/18/21 - Alex Rhee: Script created
+                    1/12/2022 - Fabian Montero: Updated send date to be UTC ISO String
+                    05/03/22 - Matías Andrade: Code refactoring.
+    */
 
-    logger.info('Start of the process LetterManagementOnLoad at ' + Date());
+    logger.info('Start of the process LetterManagementSendEmail at ' + Date());
 
     /****************
      Config Variables
-    *****************/
+     *****************/
+    let CommunicationLogTemplateID = 'Communications Log';
+    let OrganizationEmployeeTemplateID = 'Organization Employees';
+    let FacilityEmployeeTemplateID = 'Facility Employees';
+    let errorMessageGuidance = 'Please try again or contact a system administrator if this problem continues.';
     let missingFieldGuidance = 'Please provide a value for the missing field and try again, or contact a system administrator if this problem continues.';
-    let relParams = {}
-    relParams.indexFields = 'include';
-    relParams.limit = '2000';
-    let today = moment().tz('America/Chicago').format('L');
+    let sendDate = new Date().toISOString();
+    let IDToPass = "";
 
     /****************
      Script Variables
-    *****************/
+     *****************/
     let outputCollection = [];
     let errorLog = [];
-    let shortDescription = "";
-    let RecipientEmail = "";
-
+    let EmailArray = [];
 
     /****************
-         Helper Functions
-        *****************/
+     Helper Functions
+    *****************/
+
     // Check if field object has a value property and that value is truthy before returning value.
     function getFieldValueByName(fieldName, isOptional) {
         try {
@@ -161,18 +166,28 @@ module.exports.main = async function (ffCollection, vvClient, response) {
         /*********************
          Form Record Variables
         **********************/
-        let FormTemplateName = getFieldValueByName('Form Template Name');
-        let FormTemplateID = getFieldValueByName('Form Template ID');
+        let RevisionID = getFieldValueByName('REVISIONID');
+        let OrganizationID = getFieldValueByName('Organization ID', true);
+        let IndividualID = getFieldValueByName('Individual ID', true);
+        let DisciplinaryID = getFieldValueByName('Disciplinary Event ID', true);
+        let FacilityID = getFieldValueByName('Facility ID', true);
+        let LicenseID = getFieldValueByName('License Details ID', true);
+        let LetterHTML = getFieldValueByName('Letter HTML');
+        let Subject = getFieldValueByName('Subject of Template');
+        let Recipient = getFieldValueByName('Recipient Email', true);
+        let CommType = getFieldValueByName('Communication Type');
 
-        //This variable must contain the name of the field that contains the email address.
-        let EmailFieldName = getFieldValueByName('Email Field Name');
-
-        //We force the first letter to be lowercase, since all the variables returned by the getForms function are lowercase.
-        EmailFieldName = EmailFieldName.charAt(0).toLowerCase() + EmailFieldName.slice(1);
-
-        /****************************
-         Unused Form Record Variables
-        *****************************/
+        if (LicenseID) {
+            IDToPass = LicenseID;
+        } else if (DisciplinaryID) {
+            IDToPass = DisciplinaryID;
+        } else if (OrganizationID) {
+            IDToPass = OrganizationID;
+        } else if (FacilityID) {
+            IDToPass = FacilityID;
+        } else if (IndividualID) {
+            IDToPass = IndividualID;
+        }
 
         // Specific fields are detailed in the errorLog sent in the response to the client.
         if (errorLog.length > 0) {
@@ -182,27 +197,100 @@ module.exports.main = async function (ffCollection, vvClient, response) {
         /****************
          BEGIN ASYNC CODE
         *****************/
+        //Step 1. Find Organization Employees for admin/owner emails
 
-        //Step 1. The email of the requesting user is obtained.
-        const getFormsParams = {
-            q: `[form ID] eq '${FormTemplateID}'`,
-            expand: true, // true to get all the form's fields
-            // fields: 'id,name', // to get only the fields 'id' and 'name'
-        };
+        if (OrganizationID) {
+            let orgEmployeeQuery = `[Organization ID] eq '${OrganizationID}' and ([Is Owner] eq 'True' or [Is Administrator] eq 'True')`;
 
-        const getFormsRes = await vvClient.forms
-            .getForms(getFormsParams, FormTemplateName)
-            .then((res) => parseRes(res))
-            .then((res) => checkMetaAndStatus(res, shortDescription))
-            .then((res) => checkDataPropertyExists(res, shortDescription));
+            let orgEmployeeQueryObj = {
+                q: orgEmployeeQuery,
+                expand: true,
+            };
 
-        if (getFormsRes.data.length !== 0) {
-            RecipientEmail = getFormsRes.data[0][EmailFieldName];
+            let getOrgEmployeeResp = await vvClient.forms.getForms(orgEmployeeQueryObj, OrganizationEmployeeTemplateID)
+                .then((res) => parseRes(res))
+                .then((res) => checkMetaAndStatus(res, `There was an error when calling getForms. ${errorMessageGuidance}`))
+                .then((res) => checkDataPropertyExists(res, `Data was not able to be returned when calling getForms. ${errorMessageGuidance}`));
+
+            let getOrgEmployeeData = (getOrgEmployeeResp.hasOwnProperty('data') ? getOrgEmployeeResp.data : null);
+
+            if (getOrgEmployeeData.length > 0) {
+                for (const rec of getOrgEmployeeData) {
+                    if (EmailArray.indexOf(rec['employee Email']) < 0) {
+                        EmailArray.push(rec['employee Email']);
+                    }
+                }
+            }
         }
 
-        //Step 2. Return of the email found
+        if (FacilityID) {
+            let facEmployeeQuery = `[Facility ID] eq '${FacilityID}' and ([Is Owner] eq 'True' or [Is Administrator] eq 'True')`;
+
+            let facEmployeeQueryObj = {
+                q: facEmployeeQuery,
+                expand: true,
+            };
+
+            let getFacEmployeeResp = await vvClient.forms.getForms(facEmployeeQueryObj, FacilityEmployeeTemplateID)
+                .then((res) => parseRes(res))
+                .then((res) => checkMetaAndStatus(res, `There was an error when calling getForms. ${errorMessageGuidance}`))
+                .then((res) => checkDataPropertyExists(res, `Data was not able to be returned when calling getForms. ${errorMessageGuidance}`));
+
+            let getFacEmployeeData = (getFacEmployeeResp.hasOwnProperty('data') ? getFacEmployeeResp.data : null);
+
+            if (getFacEmployeeData.length > 0) {
+                for (const rec of getFacEmployeeData) {
+                    if (EmailArray.indexOf(rec['employee Email']) < 0) {
+                        EmailArray.push(rec['employee Email']);
+                    }
+                }
+            }
+        }
+
+        if (EmailArray.indexOf(Recipient) < 0) {
+            EmailArray.push(Recipient);
+        }
+
+
+        //Step 2. Create the communication log
+        let fieldsObject = {
+            'Email Body': LetterHTML,
+            'Primary Record ID': IDToPass,
+            'Subject': Subject,
+            'Communication Type': CommType,
+            'Email Recipients': EmailArray.join(),
+            'Email Type': 'Immediate Send',
+            'Approved': 'Yes',
+            'Scheduled Date': sendDate,
+            'Communication Type Filter': 'Send New',
+            'Form Saved': 'True'
+        }
+
+        let updateObj = [
+            { name: 'REVISIONID', value: RevisionID },
+            { name: 'ACTION', value: 'Post' },
+            { name: 'TARGETTEMPLATENAME', value: CommunicationLogTemplateID },
+            { name: 'UPDATEFIELDS', value: fieldsObject }
+        ];
+
+        let postFormsTaskResp = await vvClient.scripts.runWebService('LibFormUpdateorPostandRelateForm', updateObj)
+            .then((res) => checkMetaAndStatus(res, `There was an error when calling LibFormUpdateorPostandRelateForm. ${errorMessageGuidance}`))
+            .then((res) => checkDataPropertyExists(res, `Data was not able to be returned when calling LibFormUpdateorPostandRelateForm. ${errorMessageGuidance}`));
+
+        let postFormsTaskData = (postFormsTaskResp.hasOwnProperty('data') ? postFormsTaskResp.data : null);
+
+        if (IDToPass) {
+            let relateResp = await vvClient.forms.relateFormByDocId(postFormsTaskData[2].revisionId, IDToPass);
+            relateResp = JSON.parse(relateResp)
+            if (relateResp.meta.status !== 200 && relateResp.meta.status !== 404) {
+                throw new Error(`There was an error when attempting to relate this record to the Organization Record ${errorMessageGuidance}`)
+            }
+        }
+
+        //Return Array
         outputCollection[0] = "Success";
-        outputCollection[1] = RecipientEmail;
+        outputCollection[1] = "Facility found.";
+        outputCollection[2] = postFormsTaskData[2].revisionId;
 
     } catch (error) {
         console.log(error);
