@@ -39,7 +39,7 @@ if (formSaved) {
     VV.Form.SetFieldValue('Form Saved', 'True', true)
 }
 
-//VV.Form.Template.RetrieveUserInfo();
+VV.Form.Template.RetrieveUserInfo();
 
 VV.Form.SetFieldValue('Communication Type', 'Email');
 
