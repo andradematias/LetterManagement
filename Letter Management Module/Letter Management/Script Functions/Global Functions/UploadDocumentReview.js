@@ -44,20 +44,17 @@ var CallServerSide = function () {
   //This gets all of the form fields.
   var formData = VV.Form.getFormDataCollection();
 
-  // Create objects to add to formData
-  const revisionIDObj = {
-    name: "REVISIONID",
-    value: VV.Form.DataID,
-  };
-
-  const targetFormID = {
-    name: "Target Form ID",
-    value: targetFormID,
-  };
-
-  // Add new data to formData
-  formData.push(targetFormID);
-  formData.push(revisionIDObj);
+  // Add data to formData
+  formData.push(
+    {
+      name: "REVISIONID",
+      value: VV.Form.DataID,
+    },
+    {
+      name: "Target Form ID",
+      value: targetFormID,
+    }
+  );
 
   var data = JSON.stringify(formData);
   var requestObject = $.ajax({
