@@ -22,7 +22,7 @@ else {
 
 //If the user confirms, the global function "AddCommunicationLog" is called to record the log
 function sendEmail() {
-    var modalBody = "Do you really want to send this letter as an email?"
+    const modalBody = "Do you really want to send this letter as an email?"
 
     // BuildIt,ModalTitle,ModalBody,ShowCloseButton,ShowOkButton,OkButtonTitle,OkButtonCallback   
     VV.Form.Global.MessageModal(false, 'Send Email', modalBody, true, true, 'Ok', VV.Form.Template.SendEmail, 'Cancel')

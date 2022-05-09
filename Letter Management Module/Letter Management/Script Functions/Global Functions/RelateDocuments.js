@@ -1,9 +1,9 @@
 // RelateDocuments for Continuing Education
 VV.Form.DoAjaxFormSave(); // Save so there will be a form ID
 
-var ScriptName = 'RelateDocuments';
-var WebsvcName = 'LibRelateDocuments';
-var FormID = formID; // This is a parameter because not all form ID fields are named the same
+const ScriptName = 'RelateDocuments';
+const WebsvcName = 'LibRelateDocuments';
+let FormID = formID; // This is a parameter because not all form ID fields are named the same
 let LicenseAppID;
 if (!FormID.includes('NUR-HOM-FAC-INFO')) {
     LicenseAppID = VV.Form.GetFieldValue('License Application ID');
@@ -12,33 +12,31 @@ if (!FormID.includes('NUR-HOM-FAC-INFO')) {
 }
 
 
-var CallServerSide = function () {
+const CallServerSide = function () {
     //This gets all of the form fields.
-    var formData = [];
-
-    var FormInfo = {};
-    FormInfo.name = 'REVISIONID';
-    FormInfo.value = VV.Form.DataID; // Form GUID
-    formData.push(FormInfo);
-
-    var FormInfo = {};
-    FormInfo.name = 'License Application ID';
-    FormInfo.value = LicenseAppID;
-    formData.push(FormInfo);
-
-    var FormInfo = {};
-    FormInfo.name = 'Individual ID';
-    FormInfo.value = VV.Form.GetFieldValue('Individual ID');
-    formData.push(FormInfo);
-
-    var FormInfo = {};
-    FormInfo.name = 'Form ID';
-    FormInfo.value = formID;
-    formData.push(FormInfo);
+    let formData = [];
+    formData.push(
+        {
+            name: 'REVISIONID',
+            value: VV.Form.DataID // Form GUID
+        },
+        {
+            name: 'License Application ID',
+            value: LicenseAppID
+        },
+        {
+            name: 'Individual ID',
+            value: VV.Form.GetFieldValue('Individual ID')
+        },
+        {
+            name: 'Form ID',
+            value: FormID
+        }
+    );
 
     //Following will prepare the collection and send with call to server side script.
-    var data = JSON.stringify(formData);
-    var requestObject = $.ajax({
+    const data = JSON.stringify(formData);
+    const requestObject = $.ajax({
         type: "POST",
         url: VV.BaseAppUrl + 'api/v1/' + VV.CustomerAlias + '/' + VV.CustomerDatabaseAlias +
             '/scripts?name=' + WebsvcName,
@@ -54,7 +52,7 @@ var CallServerSide = function () {
 $.when(
     CallServerSide()
 ).always(function (resp) {
-    var messageData = '';
+    let messageData = '';
     if (typeof (resp.status) != 'undefined') {
         messageData = "A status code of " + resp.status + " returned from the server. There is a communication problem with the web servers. If this continues, please contact the administrator and communicate to them this message and where it occurred.";
         console.error(ScriptName + ': ' + messageData);
@@ -66,7 +64,7 @@ $.when(
     else if (resp.meta.status == '200') {
         if (resp.data[0] != 'undefined') {
             if (resp.data[0] == 'Success') {
-
+                console.log(`Related to success`);
             }
             else if (resp.data[0] == 'Error') {
                 messageData = 'An error was encountered. ' + resp.data[1];

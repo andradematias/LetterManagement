@@ -1,4 +1,4 @@
-var logger = require('../log');
+let logger = require('../log');
 
 module.exports.getCredentials = function () {
     // Get customerAlias and databaseAlias from the project url

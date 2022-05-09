@@ -1,4 +1,4 @@
-var logger = require('../log');
+let logger = require('../log');
 
 module.exports.getCredentials = function () {
     // Get customerAlias and databaseAlias from the project url
@@ -56,7 +56,7 @@ module.exports.main = async function (ffCollection, vvClient, response) {
     let missingFieldGuidance = 'Please provide a value for the missing field and try again, or contact a system administrator if this problem continues.'
 
     //The name of the custom query in Default queries (NOT in form data queries)
-    var userQueryName = 'User Lookup';
+    let userQueryName = 'User Lookup';
 
     // Query names used in call to LibFormDuplicatePersonChecking.
     let soundexQueryName = 'zWebSvc Individual Soundex Query'
@@ -81,12 +81,12 @@ module.exports.main = async function (ffCollection, vvClient, response) {
     *****************/
     let outputCollection = [];
     let errorLog = [];
-    var continueVerify = true;
+    let continueVerify = true;
     let manyDuplicates = false;
     let emailSubject = '';
     let emailBody = '';
     let recordID;
-    var processDone = false;
+    let processDone = false;
 
     try {
 
@@ -234,7 +234,7 @@ module.exports.main = async function (ffCollection, vvClient, response) {
                             if (getIndRecData.length != 0) {
                                 continueVerify = false;
                                 if (getIndRecData[0]["instanceName"] != FormID) {
-                                    var userQueryParams = { filter: "[UsUserID] = '" + userRecord["email Address"] + "'" }
+                                    let userQueryParams = { filter: "[UsUserID] = '" + userRecord["email Address"] + "'" }
 
                                     let userSearchResp = await vvClient.customQuery.getCustomQueryResultsByName(userQueryName, userQueryParams)
                                     userSearchResp = JSON.parse(userSearchResp);
@@ -324,7 +324,7 @@ module.exports.main = async function (ffCollection, vvClient, response) {
                                             emailToUse = userRecord["email Address"];
 
                                             //Step 3. If the email template is found, pull the email body and subject and then call LibUserCreate.
-                                            var createUserDataArray = [
+                                            let createUserDataArray = [
                                                 { name: "Group List", value: GroupList },
                                                 { name: "User Id", value: emailToUse },
                                                 { name: "Email Address", value: emailToUse },

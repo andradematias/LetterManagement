@@ -1,6 +1,6 @@
-var logger = require('../log');
-var Q = require('q');
-var momentTz = require('moment-timezone');
+let logger = require('../log');
+let Q = require('q');
+let momentTz = require('moment-timezone');
 
 module.exports.getCredentials = function () {
     // Get customerAlias and databaseAlias from the project url
@@ -54,11 +54,11 @@ module.exports.main = async function (vvClient, response, token) {
     response.json('200', 'Process started, please check back in this log for more information as the process completes.');
 
     //CONFIGURABLE VALUES IN THE FOLLOWING AREA.
-    var commLogTemplateID = 'Communications Log';
-    var commLogQuery = 'Communication Send Immediately';
-    var frequencyEmailSendinms = 500;   //This is the number of milleseconds delay between sending each email.
+    const commLogTemplateID = 'Communications Log';
+    const commLogQuery = 'Communication Send Immediately';
+    const frequencyEmailSendinms = 500;   //This is the number of milleseconds delay between sending each email.
 
-    var timeZone = 'America/New_York';
+    const timeZone = 'America/New_York';
     /* Reference List of Moment Timezones: 
     Pacific Time: America/Los_Angeles
     Arizona Time: America/Phoenix
@@ -69,11 +69,11 @@ module.exports.main = async function (vvClient, response, token) {
     //END OF CONFIGURABLE VALUES
 
     //Other globally used variables.
-    var errorLog = [];   //Array for capturing error messages that may occur.
+    let errorLog = [];   //Array for capturing error messages that may occur.
 
     try {
         //This function takes a configurable number of milliseconds to complete and returns a promise
-        var waitFunction = function () {
+        const waitFunction = function () {
             return new Promise(function (resolve) {
                 setTimeout(function () {
                     resolve('Waited');
@@ -81,10 +81,10 @@ module.exports.main = async function (vvClient, response, token) {
             });
         };
 
-        var mergeArray = function (array) {
-            var a = array.concat();
-            for (var i = 0; i < a.length; ++i) {
-                for (var j = i + 1; j < a.length; ++j) {
+        const mergeArray = function (array) {
+            let a = array.concat();
+            for (let i = 0; i < a.length; ++i) {
+                for (let j = i + 1; j < a.length; ++j) {
                     if (a[i] === a[j])
                         a.splice(j--, 1);
                 }
@@ -94,11 +94,11 @@ module.exports.main = async function (vvClient, response, token) {
         };
 
         //Parameter for the query.
-        var queryparams = {};
+        let queryparams = {};
 
         //Run query to get the communication log items.
         let commLogs = await vvClient.customQuery.getCustomQueryResultsByName(commLogQuery, queryparams);
-        var responseItem = JSON.parse(commLogs);
+        let responseItem = JSON.parse(commLogs);
         if (responseItem.meta.status !== 200) {
             throw new Error('Error encountered when running the query to get communication logs that need to be sent.');
         }
@@ -107,10 +107,10 @@ module.exports.main = async function (vvClient, response, token) {
             throw new Error('No communication log records found.');
         }
 
-        var commLogsToSend = responseItem.data;
-        var numberToSend = responseItem.data.length;
+        let commLogsToSend = responseItem.data;
+        let numberToSend = responseItem.data.length;
 
-        for (var i = 0; i < numberToSend; i++) {
+        for (let i = 0; i < numberToSend; i++) {
             const locItem = commLogsToSend[i];
             try {
 
@@ -124,16 +124,16 @@ module.exports.main = async function (vvClient, response, token) {
                     //3. Wait a configurable number of milliseconds
 
                     //Fetch Docs
-                    var getRelatedDocsParams = {};
+                    let getRelatedDocsParams = {};
                     let relatedDocs = await vvClient.forms.getFormRelatedDocs(locItem.dhid, getRelatedDocsParams);
-                    var docResp = JSON.parse(relatedDocs);
+                    const docResp = JSON.parse(relatedDocs);
                     if (docResp.meta.status !== 200) {
                         throw new Error('The call to get related documents for email returned with an error.');
                     }
                     let docsData = docResp.data;
 
                     //Load the email object.
-                    var emailObj = {};
+                    let emailObj = {};
                     //emailObj.recipients = locItem['email Recipients'];
                     //emailObj.ccrecipients = locItem['cc'];
                     emailObj.subject = locItem['subject'];
@@ -168,7 +168,6 @@ module.exports.main = async function (vvClient, response, token) {
                             emailSent = true;
 
                         } catch (err) {
-                            hasErrors = true;
                             errorLog.push(err);
                         }
                     }
@@ -177,10 +176,7 @@ module.exports.main = async function (vvClient, response, token) {
                     if (emailSent) {
                         //Load object to update comm log record. Include local timestamp
                         //Commented out the timezone because it is causing issues.  Jason 2/4/2022
-                        var updateObj = {};
-                        //var sendDate = momentTz().tz(timeZone).format('L');
-                        //var sendTime = momentTz().tz(timeZone).format('LT');
-                        //var localScheduledTime = sendDate + " " + sendTime;
+                        let updateObj = {};
                         updateObj['Communication Date'] = new Date().toISOString();
                         updateObj['Communication Sent'] = 'Yes';
 

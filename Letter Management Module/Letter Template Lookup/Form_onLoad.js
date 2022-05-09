@@ -4,10 +4,10 @@
 
 console.log(VV.Form.GetFieldValue('Revision ID'));
 
-var formSaved = VV.Form.IsFormSaved
+const formSaved = VV.Form.IsFormSaved
 
-if(formSaved){
-    VV.Form.SetFieldValue('Form Saved','True',true)
+if (formSaved) {
+    VV.Form.SetFieldValue('Form Saved', 'True', true)
 }
 
 // set field defaults

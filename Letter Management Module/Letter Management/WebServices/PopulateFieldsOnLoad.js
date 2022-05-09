@@ -1,6 +1,6 @@
 const { query } = require('winston');
-var logger = require('../log');
-var moment = require('moment');
+let logger = require('../log');
+const moment = require('moment');
 
 module.exports.getCredentials = function () {
     // Get customerAlias and databaseAlias from the project url

@@ -1,6 +1,6 @@
 const { query } = require('winston');
-var logger = require('../log');
-var moment = require('moment-timezone');
+let logger = require('../log');
+const moment = require('moment-timezone');
 //const { IoT1ClickProjects } = require('aws-sdk');
 
 module.exports.getCredentials = function () {

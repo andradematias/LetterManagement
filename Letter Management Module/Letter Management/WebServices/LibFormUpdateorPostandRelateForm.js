@@ -1,14 +1,19 @@
-var logger = require('../log');
+let logger = require('../log');
 
 
 module.exports.getCredentials = function () {
-    var options = {};
-    options.customerAlias = "NEDHHS";
-    options.databaseAlias = "LIS";
-    options.userId = "NEDHHS.api";
-    options.password = "NEDHHSapi2021";
-    options.clientId = "03ab5b3c-abee-4188-a9f2-bcf93d2467aa";
-    options.clientSecret = "h4I2RKUXBqAcNFTqL7VDsrPNMUmUKMQyJIDXm9vXW1o=";
+    // Get customerAlias and databaseAlias from the project url
+    // https://vv5demo.visualvault.com/app/customerAlias/Main/UserPortal
+    // Get ID and Secret from /Control Panel/Administration Tools/User Administration/User Information => HTTP API Access
+    // clientId: API Key
+    // clientSecret: API Secret
+    let options = {};
+    options.customerAlias = "Matias";
+    options.databaseAlias = "Main";
+    options.userId = "Matias.API";
+    options.password = "p";
+    options.clientId = "ce26b233-d68e-4406-a148-3b9458cd6f33";
+    options.clientSecret = "yJCQUzYNS7CvJypLp18klcY5Ncyap6Pm12n2tNKFy2s=";
     return options;
 };
 
@@ -70,25 +75,25 @@ module.exports.main = async function (ffCollection, vvClient, response) {
     logger.info('Start of the process LibFormUpdateorPostandRelateForm at ' + Date());
 
     //Initialization of the return object
-    var returnObj = [];    //Variable used to return information back to the client.
+    let returnObj = [];    //Variable used to return information back to the client.
 
     //Initialization of script variables: Passed in parameters
-    var currentFormId = '';             //Used to store the revision ID of the current form.
-    var actionRequested = '';           //Used to store the action, either 'Post' or 'Update'
-    var targetTemplateName = '';        //Used to store the template name of the target form to post or update.
-    var targetFormId = '';              //Used to store the revision ID of the form to update.
-    var childFormQuery = {};            //Used to store a query to find multiple child forms to update and relate each to the parent form. 
-    var targetFields = {};              //Used to store the object that represents fields to update with new values. 
+    let currentFormId = '';             //Used to store the revision ID of the current form.
+    let actionRequested = '';           //Used to store the action, either 'Post' or 'Update'
+    let targetTemplateName = '';        //Used to store the template name of the target form to post or update.
+    let targetFormId = '';              //Used to store the revision ID of the form to update.
+    let childFormQuery = {};            //Used to store a query to find multiple child forms to update and relate each to the parent form. 
+    let targetFields = {};              //Used to store the object that represents fields to update with new values. 
 
     //Initialization of other script variables
-    var inputErrors = 0;                //Used to count the number of input errors
-    var inputErrorsMessage = 'The following errors were encountered with the supplied parameters: <br>';            //Used to store a message to return to the user about what input generated errors.
-    var relatedFormId = '';             //Used to store the GUID of the newly posted form, so that it can be related to the current form. 
-    var updateByRevisionId = false;     //Used to indicate whether a target form ID was provided, so only that form should be updated and related
-    var updateByQuery = false;          //Used to indicate whether a query object was provided, so multiple forms should be found, updated, and related to the parent form. 
-    var numForms = -1;                  //Used to store the number of forms returned from the query.  
-    var childFormData = [];             //Used to store the form data returned from the query.
-    var relatedFormsArray = [];         //Used to store an array of related child forms, when multiple child forms were updated and related. 
+    let inputErrors = 0;                //Used to count the number of input errors
+    let inputErrorsMessage = 'The following errors were encountered with the supplied parameters: <br>';            //Used to store a message to return to the user about what input generated errors.
+    let relatedFormId = '';             //Used to store the GUID of the newly posted form, so that it can be related to the current form. 
+    let updateByRevisionId = false;     //Used to indicate whether a target form ID was provided, so only that form should be updated and related
+    let updateByQuery = false;          //Used to indicate whether a query object was provided, so multiple forms should be found, updated, and related to the parent form. 
+    let numForms = -1;                  //Used to store the number of forms returned from the query.  
+    let childFormData = [];             //Used to store the form data returned from the query.
+    let relatedFormsArray = [];         //Used to store an array of related child forms, when multiple child forms were updated and related. 
 
     try {
         //Extract the values of the passed in fields. Aggregate error messages into one message so that user can be informed of all issues at once.
@@ -207,7 +212,7 @@ module.exports.main = async function (ffCollection, vvClient, response) {
         //If a form was Posted, or if only one form was Updated, relate the target form with the current (parent) form
         if (actionRequested == 'post' || (actionRequested == 'update' && updateByRevisionId == true)) {
             let relateResp = await vvClient.forms.relateForm(currentFormId, relatedFormId);
-            var relatedResp = JSON.parse(relateResp);
+            const relatedResp = JSON.parse(relateResp);
             if (relatedResp.meta.status === 200 || relatedResp.meta.status === 404) {
                 //This is the last action. Return the result to the calling function.
                 returnObj[0] = 'Success';
@@ -224,12 +229,12 @@ module.exports.main = async function (ffCollection, vvClient, response) {
         //If a query is being used to find and relate multiple forms, first run getForms to return a number of forms and the form data set. 
         if (actionRequested == 'update' && updateByQuery == true) {
             //First thing to do is get forms based on the query and measure the results
-            var formQuery = {};
+            let formQuery = {};
             formQuery.q = childFormQuery;
 
             let formResponse = await vvClient.forms.getForms(formQuery, targetTemplateName);
             //measure results
-            var formResp = JSON.parse(formResponse);
+            const formResp = JSON.parse(formResponse);
             if (formResp.meta.status === 200) {
                 numForms = formResp.data.length;
                 childFormData = formResp.data;
@@ -251,8 +256,8 @@ module.exports.main = async function (ffCollection, vvClient, response) {
         //If the number of forms returned from getForms is > 0, iterate through each item in the data set (array childFormData) to update it and relate it to the parent form
         if (numForms > 0) {
             for (let i = 0; i < numForms; i++) {
-                var newChildFormId = '';
-                var newChildFormData = {};              //Used to store the data output of the postformRevision call, to push it to relatedFormsArray, which is returned in returnObj[2]
+                let newChildFormId = '';
+                let newChildFormData = {};              //Used to store the data output of the postformRevision call, to push it to relatedFormsArray, which is returned in returnObj[2]
 
                 let newChildForm = await vvClient.forms.postFormRevision(null, targetFields, targetTemplateName, childFormData[i].revisionId);
                 if (newChildForm.meta.status === 201 || newChildForm.meta.status === 200) {
@@ -261,7 +266,7 @@ module.exports.main = async function (ffCollection, vvClient, response) {
 
                     // Now relate the updated child form to the currently open parent form. 
                     let relatePromise = await vvClient.forms.relateForm(newChildFormId, currentFormId);
-                    var relateNewChildForm = JSON.parse(relatePromise);
+                    const relateNewChildForm = JSON.parse(relatePromise);
                     if (relateNewChildForm.meta.status === 201 || relateNewChildForm.meta.status === 200) {
                         //logger.info("The child form was successfully related to the parent form. ");
                         relatedFormsArray.push(newChildFormData);

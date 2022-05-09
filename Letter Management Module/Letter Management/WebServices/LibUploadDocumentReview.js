@@ -1,5 +1,5 @@
 const { query } = require('winston');
-var logger = require('../log');
+let logger = require('../log');
 
 module.exports.getCredentials = function () {
     // Get customerAlias and databaseAlias from the project url
@@ -79,8 +79,8 @@ module.exports.main = async function (ffCollection, vvClient, response) {
     }
 
     function getFormPrefix(formID) {
-        var prefixReg = /^([A-Za-z-]+)-\d+$/; // gets the prefix of the form (e.g. 'EDUCATION-HISTORY' in 'EDUCATION-HISTORY-00000125')
-        var formPrefix = '';
+        let prefixReg = /^([A-Za-z-]+)-\d+$/; // gets the prefix of the form (e.g. 'EDUCATION-HISTORY' in 'EDUCATION-HISTORY-00000125')
+        let formPrefix = '';
         try {
             formPrefix = prefixReg.exec(formID)[1];
         } catch (error) {
@@ -150,7 +150,7 @@ module.exports.main = async function (ffCollection, vvClient, response) {
             }
         }
         if (IndividualID) {
-            var grantIndividualPermissionDataArray = [
+            const grantIndividualPermissionDataArray = [
                 { name: "Individual ID", value: IndividualID }
             ];
             let grantIndividualPermissionResp = await vvClient.scripts.runWebService('LibGrantViewerPermissionToIndividualFolder', grantIndividualPermissionDataArray);

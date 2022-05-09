@@ -9,7 +9,7 @@
                     fieldMappings: array of objects containing: sourceFieldName, sourceFieldValue, targetFieldName
                     launchType: 'self' launches the target form in the same window.
                     Mapped field array example for build fieldMappings
-                     var mappedField = {};
+                     let mappedField = {};
                      mappedField.sourceFieldName = 'providerId';
                      mappedField.sourceFieldValue = VV.Form.GetFieldValue('Provider ID');
                      mappedField.targetFieldName = 'Provider ID';
@@ -28,7 +28,7 @@
 
 //Opens using new window that is popup blocker safe as long as this function is called from a DOM event handler
 
-var popupUrl = VV.BaseURL + "form_details?formid=" + templateId + "&RelateForm=" + VV.Form.DataID + "&IsRelate=true&hidemenu=true";
+let popupUrl = VV.BaseURL + "form_details?formid=" + templateId + "&RelateForm=" + VV.Form.DataID + "&IsRelate=true&hidemenu=true";
 
 fieldMappings.forEach(function (fieldMapping) {
     if (fieldMapping) {
@@ -37,7 +37,7 @@ fieldMappings.forEach(function (fieldMapping) {
 }, this);
 
 //Determine action by the window that is launched.
-var launchMode = "_blank";
+let launchMode = "_blank";
 if (launchType != null && launchType != undefined) {
     if (launchType.toLowerCase() == "self") {
         launchMode = "_self";

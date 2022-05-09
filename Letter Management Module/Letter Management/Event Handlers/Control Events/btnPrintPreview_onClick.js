@@ -6,5 +6,5 @@ function isNull(controlValue) {
     return false;
 }
 
-var isLandscape = isNull(VV.Form.GetFieldValue('Landscape')) ? false : VV.Form.GetFieldValue('Landscape')
+const isLandscape = isNull(VV.Form.GetFieldValue('Landscape')) ? false : VV.Form.GetFieldValue('Landscape')
 VV.Form.Template.PrintLetter(VV.Form.GetFieldValue('Letter HTML'), VV.Form.Template.ParseTokens('[Full Name]'), isLandscape);

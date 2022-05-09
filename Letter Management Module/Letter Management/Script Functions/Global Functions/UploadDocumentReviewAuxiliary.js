@@ -2,20 +2,20 @@
 // Forms affected: Certification, Continuing Education, Conviction Information, "Degree, Experience and Educational Content", Education History, Exam Results, Other Licenses, Provisional Nursing Home Information, Training
 const LUGroups = new Set(['License Coordinator', 'License Manager', 'License Processor', 'VaultAccess']);
 const InProcessAppStatuses = new Set(['New', 'Staff Entry', 'Waiting Applicant Action']);
-var showRemoveButton = false;
-var showVerifyStatus = false;
-var isLUStaff = VV.Form.FormUserGroups.some(function (userGroup) {
+let showRemoveButton = false;
+let showVerifyStatus = false;
+const isLUStaff = VV.Form.FormUserGroups.some(function (userGroup) {
     return LUGroups.has(userGroup);
 });
-var applicationSubmitted = false; // updated by LicenseApplicationAuxiliaryReadOnly
+let applicationSubmitted = false; // updated by LicenseApplicationAuxiliaryReadOnly
 try {
     applicationSubmitted = VV.Form.GetFieldValue('Application Submitted').toLowerCase() == 'true';
 } catch (e) {
     console.warn('Could not read field "Application Submitted". This form may not be picked up by LicenseApplicationAuxiliaryReadOnly');
 }
-var licenseApplicationID;
+let licenseApplicationID;
 if (window.opener && window.opener.VV) {
-    var parentFormID = window.opener.VV.Form.GetFieldValue('Form ID');
+    const parentFormID = window.opener.VV.Form.GetFieldValue('Form ID');
     if (parentFormID.startsWith('LICAPP')) {
         licenseApplicationID = parentFormID;
     }
@@ -23,7 +23,7 @@ if (window.opener && window.opener.VV) {
 
 // options based on target form & security group
 if (licenseApplicationID) {
-    var applicationStatus = window.opener.VV.Form.GetFieldValue('Status');
+    const applicationStatus = window.opener.VV.Form.GetFieldValue('Status');
 
     if (isLUStaff) {
         showVerifyStatus = true; // only LU sees doc status
