@@ -46,35 +46,32 @@ const CallServerSide = function () {
     formData.push(
         {
             name: "REVISIONID",
-            value: VV.Form.DataID,
+            value: "bc6f50bd-abc3-41a7-af6f-0a33aff2e396",
         },
         {
             name: "Target Form ID",
-            value: targetFormID,
+            value: "self",
         }
     );
 
+    //Following will prepare the collection and send with call to server side script.
     let data = JSON.stringify(formData);
     let requestObject = $.ajax({
         type: "POST",
-        url:
-            VV.BaseAppUrl +
-            "api/v1/" +
-            VV.CustomerAlias +
-            "/" +
-            VV.CustomerDatabaseAlias +
-            "/scripts?name=LibUploadDocumentReview",
+        url: VV.BaseAppUrl + 'api/v1/' + VV.CustomerAlias + '/' + VV.CustomerDatabaseAlias + '/scripts?name=LibUploadDocumentReview',
         contentType: "application/json; charset=utf-8",
         data: data,
-        success: "",
-        error: "",
+        success: '',
+        error: ''
     });
 
     return requestObject;
 };
 
 console.log(`getting documents related to ${targetFormID}`);
-$.when(CallServerSide()).always(function (resp) {
+$.when(
+    CallServerSide()
+).always(function (resp) {
     console.log(resp);
     VV.Form.HideLoadingPanel();
     let messageData = "";
