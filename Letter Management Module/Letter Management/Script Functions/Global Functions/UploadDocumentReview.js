@@ -1,4 +1,5 @@
 //UploadDocumentReview for Global - Modal that shows documents and lets us perform several actions based on the Options. Requires Global.DocumentCreateModal to be setup on load
+//Parameter: Options
 
 /* Options - Extend these when needed to control modal appearance and functionality */
 const showRemoveButton = Options?.showRemoveButton;

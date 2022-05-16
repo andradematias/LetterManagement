@@ -1,43 +1,43 @@
-// RelateDocuments for Continuing Education
-////Parameters: formID
-VV.Form.DoAjaxFormSave(); // Save so there will be a form ID
+// DocumentUnrelate for Global - Unrelates a document and updates the UploadDocumentValidate modal. Note: You must define a websvc depending on the context as each may perform slightly different actions
+//Parameters: DocumentID, DocGUID
 
-const ScriptName = 'RelateDocuments';
-const WebsvcName = 'LibRelateDocuments';
-let FormID = formID; // This is a parameter because not all form ID fields are named the same
-let LicenseAppID;
-if (!FormID.includes('NUR-HOM-FAC-INFO')) {
-    LicenseAppID = VV.Form.GetFieldValue('License Application ID');
+var ScriptName = 'DocumentUnrelate';
+var WebsvcName;
+var formPrefix = VV.Form.Global.GetFormPrefix(VV.Form.GetFieldValue('Form ID'));
+if (formPrefix == 'TASK') {
+    WebsvcName = 'ChecklistTaskDocumentUnrelate';
+} else if (formPrefix == 'LICAPP') {
+    WebsvcName = 'LicenseApplicationDocumentUnrelate';
+} else if (formPrefix == 'INFO-CHANGE-REQUEST') {
+    WebsvcName = 'InformationChangeRequestDocumentUnrelate';
 } else {
-    LicenseAppID = VV.Form.GetFieldValue('License ID');
+    var errMsg = 'Cannot find document verify webservice for this form template!'
+    alert(errMsg);
+    throw new Error(errMsg);
 }
-
-
-const CallServerSide = function () {
+var CallServerSide = function () {
     //This gets all of the form fields.
-    let formData = [];
-    formData.push(
-        {
-            name: 'REVISIONID',
-            value: VV.Form.DataID // Form GUID
-        },
-        {
-            name: 'License Application ID',
-            value: LicenseAppID
-        },
-        {
-            name: 'Individual ID',
-            value: VV.Form.GetFieldValue('Individual ID')
-        },
-        {
-            name: 'Form ID',
-            value: FormID
-        }
-    );
+    VV.Form.ShowLoadingPanel();
+    var formData = VV.Form.getFormDataCollection();
+
+    var FormInfo = {};
+    FormInfo.name = 'REVISIONID';
+    FormInfo.value = VV.Form.DataID;
+    formData.push(FormInfo);
+
+    var FormInfo = {};
+    FormInfo.name = 'Document ID';
+    FormInfo.value = DocumentID;
+    formData.push(FormInfo);
+
+    var FormInfo = {};
+    FormInfo.name = 'Document GUID';
+    FormInfo.value = DocGUID;
+    formData.push(FormInfo);
 
     //Following will prepare the collection and send with call to server side script.
-    const data = JSON.stringify(formData);
-    const requestObject = $.ajax({
+    var data = JSON.stringify(formData);
+    var requestObject = $.ajax({
         type: "POST",
         url: VV.BaseAppUrl + 'api/v1/' + VV.CustomerAlias + '/' + VV.CustomerDatabaseAlias +
             '/scripts?name=' + WebsvcName,
@@ -50,39 +50,46 @@ const CallServerSide = function () {
     return requestObject;
 };
 
-$.when(
-    CallServerSide()
-).always(function (resp) {
-    let messageData = '';
+$.when(CallServerSide()).always(function (resp) {
+    VV.Form.HideLoadingPanel();
+    var messageData = '';
     if (typeof (resp.status) != 'undefined') {
         messageData = "A status code of " + resp.status + " returned from the server. There is a communication problem with the web servers. If this continues, please contact the administrator and communicate to them this message and where it occurred.";
         console.error(ScriptName + ': ' + messageData);
+        alert(messageData);
     }
     else if (typeof (resp.statusCode) != 'undefined') {
         messageData = "A status code of " + resp.statusCode + " with a message of '" + resp.errorMessages[0].message + "' returned from the server. This may mean that the servers to run the business logic are not available.";
         console.error(ScriptName + ': ' + messageData);
+        alert(messageData);
     }
     else if (resp.meta.status == '200') {
         if (resp.data[0] != 'undefined') {
             if (resp.data[0] == 'Success') {
-                console.log(`Related to success`);
+                // $("#" + resp.data[2]).empty(); // delete row
+                VV.Form.Global.DocumentCancelModal(); // clear and close modal
+                alert('Document successfully removed.');
             }
             else if (resp.data[0] == 'Error') {
                 messageData = 'An error was encountered. ' + resp.data[1];
                 console.error(ScriptName + ': ' + messageData);
+                alert(messageData);
             }
             else {
                 messageData = 'An unhandled response occurred when calling ' + WebsvcName + '. The form will not save at this time. Please try again or communicate this issue to support.';
                 console.error(ScriptName + ': ' + messageData);
+                alert(messageData);
             }
         }
         else {
             messageData = 'The status of the response returned as undefined.';
             console.error(ScriptName + ': ' + messageData);
+            alert(messageData);
         }
     }
     else {
         messageData = "The following unhandled response occurred while attempting to retrieve data from " + WebsvcName + resp.data.error;
         console.error(ScriptName + ': ' + messageData);
+        alert(messageData);
     }
 });
