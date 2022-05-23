@@ -20,7 +20,7 @@ module.exports.getCredentials = function () {
 
 module.exports.main = async function (ffCollection, vvClient, response) {
     /*Script Name:   PopulateFieldsOnLoad
-     Customer:      Nebraska, DHHS
+     Customer:      
      Purpose:       The purpose of this process is to pull information form the Indivdual Record form based off the user email and pass it to new forms to load form details as available.
      Parameters: 
      Return Array:

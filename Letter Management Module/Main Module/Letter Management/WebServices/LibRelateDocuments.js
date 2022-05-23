@@ -18,7 +18,7 @@ module.exports.getCredentials = function () {
 
 module.exports.main = async function (ffCollection, vvClient, response) {
     /*Script Name:  LibDHHSRelateDocuments
-    Customer:      NEDHHS
+    Customer:      
     Purpose:       The purpose of this process is to relate the documents related to the current form to any relevant license applications and the individual record
     Parameters:    REVISIONID (String, Required) - The revision id of the current form
                    LicenseApplicationRevID (String, Required) - The revision id of the license applications related to the current form

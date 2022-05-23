@@ -349,9 +349,6 @@ module.exports.main = async function (ffCollection, vvClient, response) {
 
             let getIndividualData = await getFormInstanceData(IndividualID, IndividualRecordTemplateID)
                 .then((res) => parseRes(res))
-                .then((res) => checkMetaAndStatus(res, shortDescription))
-                .then((res) => checkDataPropertyExists(res, shortDescription))
-                .then((res) => checkDataIsNotEmpty(res, shortDescription));
 
             if (getIndividualData.length > 0) {
                 IndividualInfo = getIndividualData[0];
@@ -363,11 +360,11 @@ module.exports.main = async function (ffCollection, vvClient, response) {
                     IndividualInfo["Full Name"] = ` - ${getIndividualData[0]["first Name"]} ${getIndividualData[0]["last Name"]}`
                 }
                 IndividualInfo["Full Name"] = IndividualInfo["Full Name"].trim();
-                RecipientEmail["email"] = getIndividualData[0]["email Address"];
-            }
+                RecipientEmail = getIndividualData[0]["email Address"];
 
-            IndividualInfo = getFormattedKeyValue(IndividualInfo);
-            IndividualInfo = prefixDataKeys("Individual Record", IndividualInfo);
+                IndividualInfo = getFormattedKeyValue(IndividualInfo);
+                IndividualInfo = prefixDataKeys("Individual Record", IndividualInfo);
+            }
         }
 
         //Step 4. Call getforms to pull All information from the Licensure Leadership Lookup table
@@ -388,8 +385,6 @@ module.exports.main = async function (ffCollection, vvClient, response) {
                     } else {
                         LeaderInfo[prefix + " - Full Name"] = `${rec["first Name"]} ${rec["last Name"]}`
                     }
-
-
                     LeaderInfo = getFormattedKeyValue(LeaderInfo);
                 }
             }

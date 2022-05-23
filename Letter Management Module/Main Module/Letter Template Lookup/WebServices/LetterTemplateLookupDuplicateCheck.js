@@ -19,7 +19,7 @@ module.exports.getCredentials = function () {
 }
 module.exports.main = async function (ffCollection, vvClient, response) {
     /*Script Name:   LetterManagementSendEmail
-     Customer:      Nebraska, DHHS
+     Customer:      
      Purpose:       The purpose of this process is to create and add a new facility.
      Parameters:
      Return Array:

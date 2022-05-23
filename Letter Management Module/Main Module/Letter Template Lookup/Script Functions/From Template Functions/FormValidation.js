@@ -1,8 +1,8 @@
 //FormValidation for the Letter Template Lookup Form
 
 //pass in ControlName to validate a single item or nothing to validate everything.
-let ErrorReporting = true;
-let RunAll = false;
+var ErrorReporting = true;
+var RunAll = false;
 if (ControlName == null) {
     RunAll = true;
 }
@@ -49,7 +49,7 @@ if (ControlName == 'Subject Line' || RunAll) {
 }
 
 if (ControlName == 'Body Text' || RunAll) {
-    let body = VV.Form.GetFieldValue('Body Text');
+    var body = VV.Form.GetFieldValue('Body Text');
     if (body == '<br>') {
         VV.Form.SetValidationErrorMessageOnField('Body Text', 'A value needs to be entered for the Body Text.');
         ErrorReporting = false;
@@ -95,10 +95,10 @@ if (ControlName == 'Send CC Selector' || RunAll) {
 
 if (ControlName == 'Send To' || RunAll) {
     if (!VV.Form.Global.CentralValidation(VV.Form.GetFieldValue('Send To'), 'Blank') == false) {
-        let errorEmailTo = 0;
-        let sendTo = VV.Form.GetFieldValue('Send To');
+        var errorEmailTo = 0;
+        var sendTo = VV.Form.GetFieldValue('Send To');
         sendTo.trim();
-        let validateSendTo = sendTo.split(',');
+        var validateSendTo = sendTo.split(',');
         validateSendTo.forEach(function (tEmail) {
             if (VV.Form.Global.CentralValidation((tEmail), 'Email') == false) {
                 errorEmailTo++;
@@ -114,10 +114,10 @@ if (ControlName == 'Send To' || RunAll) {
 
 if (ControlName == 'Send CC' || RunAll) {
     if (!VV.Form.Global.CentralValidation(VV.Form.GetFieldValue('Send CC'), 'Blank') == false) {
-        let errorEmailCC = 0;
-        let sendCC = VV.Form.GetFieldValue('Send CC');
+        var errorEmailCC = 0;
+        var sendCC = VV.Form.GetFieldValue('Send CC');
         sendCC.trim();
-        let validateSendCC = sendCC.split(',');
+        var validateSendCC = sendCC.split(',');
         validateSendCC.forEach(function (tEmailCC) {
             if (VV.Form.Global.CentralValidation((tEmailCC), 'Email') == false) {
                 errorEmailCC++;
