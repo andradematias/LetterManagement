@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <FormEntity xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<BackgroundColor>#FFFFFFFF</BackgroundColor>
-	<FormTemplateId>44f768d1-6ea1-ec11-820d-c6aac92dc9c1</FormTemplateId>
+	<FormTemplateId>4ce8a4f1-2add-ec11-a9dd-f4127e30e2df</FormTemplateId>
 	<FormTemplateChId>88b463d1-6ea1-ec11-a9d9-e0e360c46750</FormTemplateChId>
 	<CreateByUsId>2959b6ea-933d-ec11-a9d1-f3fc94a32153</CreateByUsId>
 	<ModifyByUsId>2959b6ea-933d-ec11-a9d1-f3fc94a32153</ModifyByUsId>
@@ -582,7 +582,7 @@
 					<CqValueFieldName>Display Value</CqValueFieldName>
 					<DropDownConnectionType>CustomQuery</DropDownConnectionType>
 					<EnableCascadedList>false</EnableCascadedList>
-					<EnableCustomQuery>true</EnableCustomQuery>
+					<EnableCustomQuery>false</EnableCustomQuery>
 					<EnableFormQuery>false</EnableFormQuery>
 					<EnableQListener>false</EnableQListener>
 					<FillCacheEnabled>true</FillCacheEnabled>
@@ -593,7 +593,10 @@
 					<HasCascadedParentValue>false</HasCascadedParentValue>
 					<IsParentCascadeControl>false</IsParentCascadeControl>
 					<EnableLoadOnDemand>false</EnableLoadOnDemand>
-					<ItemList />
+					<ItemList>
+						<string>Disabled</string>
+						<string>Enabled</string>
+					</ItemList>
 					<OptionList />
 					<ReportingProperty>Text</ReportingProperty>
 					<ReportingPropertySetting>0</ReportingPropertySetting>
@@ -1165,7 +1168,7 @@
 		</FormPage>
 	</FormPages>
 	<GroupsHolder>
-		<FormTemplateID>53d88616-4ef9-eb11-a9ce-81da4fd2f38e</FormTemplateID>
+		<FormTemplateID>4ce8a4f1-2add-ec11-a9dd-f4127e30e2df</FormTemplateID>
 		<GroupCollection />
 		<HasBuiltinGroups>false</HasBuiltinGroups>
 	</GroupsHolder>
@@ -1187,10 +1190,10 @@
 	<InheritedFormTemplateType>FormTemplate</InheritedFormTemplateType>
 	<InheritedFormTemplateId>00000000-0000-0000-0000-000000000000</InheritedFormTemplateId>
 	<InheritedFormTemplateRevisionId>00000000-0000-0000-0000-000000000000</InheritedFormTemplateRevisionId>
-	<SaveDateTime>2021-08-09T20:13:59Z</SaveDateTime>
+	<SaveDateTime>2022-05-26T19:39:54Z</SaveDateTime>
 	<ScriptLibrary>
 		<FormScriptItem>
-			<ScriptItemId>25a51758-a6e5-4c4f-98fe-53dfca00cda7</ScriptItemId>
+			<ScriptItemId>023502bf-8f7e-4cb2-a9cd-198a0cdc30f9</ScriptItemId>
 			<FormChId>00000000-0000-0000-0000-000000000000</FormChId>
 			<Name>RunImport</Name>
 			<Arguments />
