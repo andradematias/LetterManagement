@@ -1,0 +1,389 @@
+List Name;Display Value;Options Value;Query Option;Status
+Countries;Ethiopia;ET;any;Enabled
+Countries;Finland;FI;any;Enabled
+Countries;France;FR;any;Enabled
+Countries;Greece;GR;any;Enabled
+Countries;Haiti;HT;any;Enabled
+Countries;Unknown;7;any;Enabled
+Countries;Afghanistan;AF;any;Enabled
+Countries;Albania;AL;any;Enabled
+Countries;Algeria;DZ;any;Enabled
+Countries;Angola;AO;any;Enabled
+Countries;Antigua & Barbuda;AG;any;Enabled
+Countries;Argentina;AR;any;Enabled
+Countries;Australia;AU;any;Enabled
+Countries;Austria;AT;any;Enabled
+Countries;Bahamas;BS;any;Enabled
+Countries;Bahrain;BH;any;Enabled
+Countries;Bangladesh;BD;any;Enabled
+Countries;Belgium;BE;any;Enabled
+Countries;Bolivia;BO;any;Enabled
+Countries;Brazil;BR;any;Enabled
+Countries;Bulgaria;BG;any;Enabled
+Countries;Burma;BM;any;Enabled
+Countries;Cambodia;KH;any;Enabled
+Countries;Canada;CA;any;Enabled
+Countries;Cayman Islands;KY;any;Enabled
+Countries;Central African Republic;CF;any;Enabled
+Countries;Chile;CL;any;Enabled
+Countries;China;CN;any;Enabled
+Countries;Colombia;CO;any;Enabled
+Countries;Cuba;CU;any;Enabled
+Countries;Czech Republic;CZ;any;Enabled
+Countries;Denmark;DK;any;Enabled
+Countries;Dominica;DM;any;Enabled
+Countries;Dominican Republic;DO;any;Enabled
+Countries;Ecuador;EC;any;Enabled
+Countries;Egypt;EG;any;Enabled
+Countries;El Salvador;SV;any;Enabled
+Countries;Fiji;FJ;any;Enabled
+Countries;Gabon;GA;any;Enabled
+Countries;Germany;DE;any;Enabled
+Countries;Ghana;GH;any;Enabled
+Countries;Grenada;GD;any;Enabled
+Countries;Guatemala;GT;any;Enabled
+Countries;Guinea-Bissau;GW;any;Enabled
+Countries;Guyana;GY;any;Enabled
+Countries;Hong Kong;HK;any;Enabled
+Countries;Iceland;IS;any;Enabled
+Countries;Indonesia;ID;any;Enabled
+Countries;Iran;IR;any;Enabled
+Countries;Israel;IL;any;Enabled
+Countries;Ivory Coast;CI;any;Enabled
+Countries;Jamaica;JM;any;Enabled
+Countries;Jordan;JO;any;Enabled
+Countries;Korea;KR;any;Enabled
+Countries;Laos;LA;any;Enabled
+Countries;Libya;LB;any;Enabled
+Countries;Madagascar;MG;any;Enabled
+Countries;Mali;ML;any;Enabled
+Countries;Mongolia;MN;any;Enabled
+Countries;Morocco;MA;any;Enabled
+Countries;Mozambique;MZ;any;Enabled
+Countries;Nepal;NP;any;Enabled
+Countries;Netherlands;NL;any;Enabled
+Countries;Netherlands Antilles;AN;any;Enabled
+Countries;Newfoundland;NL;any;Enabled
+Countries;Nicaragua;NI;any;Enabled
+Countries;Honduras;HN;any;Enabled
+Countries;Hungary;HU;any;Enabled
+Countries;India;IN;any;Enabled
+Countries;Ireland;IE;any;Enabled
+Countries;Italy;IT;any;Enabled
+Countries;Japan;JP;any;Enabled
+Countries;Kenya;KE;any;Enabled
+Countries;Kuwait;KW;any;Enabled
+Countries;Latvia;LV;any;Enabled
+Countries;Lebanon;LB;any;Enabled
+Countries;Lithuania;LT;any;Enabled
+Countries;Malaysia;MY;any;Enabled
+Countries;Mexico;MX;any;Enabled
+Countries;Montserrat;MS;any;Enabled
+Countries;Myanmar;MM;any;Enabled
+Countries;New Zealand;NZ;any;Enabled
+Countries;Nigeria;NG;any;Enabled
+Countries;North Korea;KP;any;Enabled
+Countries;Northern Mariana Islands;MP;any;Disabled
+Countries;Norway;NO;any;Enabled
+Countries;Pakistan;PK;any;Enabled
+Countries;Panama;PA;any;Enabled
+Countries;Papua New Guinea;PG;any;Enabled
+Countries;Paraguay;PY;any;Enabled
+Countries;Peru;PE;any;Enabled
+Countries;Philippines;PH;any;Enabled
+Countries;Poland;PL;any;Enabled
+Countries;Portugal;PT;any;Enabled
+Countries;Qatar;QA;any;Enabled
+Countries;Romania;RO;any;Enabled
+Countries;Russia;RU;any;Enabled
+Countries;Saint Lucia;LC;any;Enabled
+Countries;Scotland;UK;any;Enabled
+Countries;Senegal;SN;any;Enabled
+Countries;Somalia;SO;any;Enabled
+Countries;South Africa;ZA;any;Enabled
+Countries;Sweden;SE;any;Enabled
+Countries;Switzerland;CH;any;Enabled
+Countries;Taiwan;TW;any;Enabled
+Countries;Thailand;TH;any;Enabled
+Countries;Togo;TG;any;Enabled
+Countries;Tunisia;TN;any;Enabled
+Countries;Uganda;UG;any;Enabled
+Countries;Union Soviet Socialist Republics;SU;any;Enabled
+Countries;United States;US;any;Enabled
+Countries;Venezuela;VE;any;Enabled
+Countries;Virgin Islands;VI;any;Disabled
+Countries;West Indies;WI;any;Enabled
+Countries;Yemen;YE;any;Enabled
+Countries;Serbia;RS;any;Enabled
+Countries;Puerto Rico;PR;any;Disabled
+Countries;Saint Kitts & Nevis;KN;any;Enabled
+Countries;Saudi Arabia;SA;any;Enabled
+Countries;Singapore;SG;any;Enabled
+Countries;South Korea;KR;any;Enabled
+Countries;Spain;ES;any;Enabled
+Countries;Sri Lanka;LK;any;Enabled
+Countries;Sudan;SD;any;Enabled
+Countries;Syria;SY;any;Enabled
+Countries;Tanzania;TZ;any;Enabled
+Countries;Trinidad and Tobago;TT;any;Enabled
+Countries;Turkey;TR;any;Enabled
+Countries;Ukraine;UA;any;Enabled
+Countries;United Arab Emirates;AE;any;Enabled
+Countries;United Kingdom;UK;any;Enabled
+Countries;Uruguay;UY;any;Enabled
+Countries;Viet Nam;VN;any;Enabled
+Countries;Democratic Republic of the Congo;CD;any;Enabled
+Countries;Zambia;ZM;any;Enabled
+Countries;Zimbabwe;ZW;any;Enabled
+Countries;South Sudan;SS;any;Enabled
+Countries;Eritrea;ER;any;Enabled
+Countries;Uzbekistan;UZ;any;Enabled
+Countries;Cameroon;CM;any;Enabled
+Countries;Niger;NE;any;Enabled
+Countries;Kazakhstan;KZ;any;Enabled
+Countries;Beinin;BJ;any;Enabled
+Countries;Burundi;BI;any;Enabled
+Countries;Azerbaijan;AZ;any;Enabled
+Countries;Tajikistan;TJ;any;Enabled
+Countries;Belarus;BY;any;Enabled
+Countries;Montenegro;ME;any;Enabled
+Countries;Kyrgyzstan;KG;any;Enabled
+Countries;Slovakia;SK;any;Enabled
+Countries;State of Palestin;PS;any;Enabled
+Countries;Mauritania;MR;any;Enabled
+Countries;Croatia;HR;any;Enabled
+Countries;Moldova;MD;any;Enabled
+Countries;Georgia;GE;any;Enabled
+Countries;Bosnia and Herzegovina;BA;any;Enabled
+Countries;Armenia;AM;any;Enabled
+Countries;Namibia;NA;any;Enabled
+Countries;Gambia;GM;any;Enabled
+Countries;Botswana;BW;any;Enabled
+Countries;North Macedonia;MK;any;Enabled
+Countries;Slovenia;SI;any;Enabled
+Countries;Equatorial Guinea;GQ;any;Enabled
+Countries;Estonia;EE;any;Enabled
+Countries;Timor-Leste;TL;any;Enabled
+Countries;Mauritius;MU;any;Enabled
+Countries;Eswatini;SQ;any;Enabled
+Countries;Djibouti;DJ;any;Enabled
+Countries;Comoros;KM;any;Enabled
+Countries;Bhutan;BT;any;Enabled
+Countries;Solomon Islands;SB;any;Enabled
+Countries;Suriname;SR;any;Enabled
+Countries;Cabo Verde;CV;any;Enabled
+Countries;Micronesia;FM;any;Enabled
+Countries;Maldives;MV;any;Enabled
+Countries;Malta;MT;any;Enabled
+Countries;Brunei;BN;any;Enabled
+Countries;Vanuatu;VU;any;Enabled
+Countries;Sao Tome and Principe;ST;any;Enabled
+Countries;Kiribati;KI;any;Enabled
+Countries;St. Vincent and Grenadines;VC;any;Enabled
+Countries;Tonga;TO;any;Enabled
+Countries;Andorra;AD;any;Enabled
+Countries;Liechtenstein;LI;any;Enabled
+Countries;San Marino;SM;any;Enabled
+Countries;Palau;PW;any;Enabled
+Countries;Tuvalu;TV;any;Enabled
+Countries;Nauru;NR;any;Enabled
+Countries;Holy See;VA;any;Enabled
+Countries;Seychelles;SC;any;Enabled
+Countries;Burkina Faso;BF;any;Enabled
+Countries;Chad;TD;any;Enabled
+Passport Countries;GUATEMALA;GTM;;Enabled
+Passport Countries;IRAQ;IRQ;;Enabled
+Passport Countries;JAPAN;JPN;;Enabled
+Passport Countries;KOREA, REPUBLIC OF (SOUTH);KOR;;Enabled
+Passport Countries;KOSOVO;KVO;;Enabled
+Passport Countries;KUWAIT;KWT;;Enabled
+Passport Countries;KYRGYZSTAN;KGZ;;Enabled
+Passport Countries;LATVIA;LVA;;Enabled
+Passport Countries;LEBANON;LBN;;Enabled
+Passport Countries;LESOTHO;LSO;;Enabled
+Passport Countries;LITHUANIA;LTU;;Enabled
+Passport Countries;MALAYSIA;MYS;;Enabled
+Passport Countries;MAURITANIA;MRT;;Enabled
+Passport Countries;MEXICO;MEX;;Enabled
+Passport Countries;MONACO;MCO;;Enabled
+Passport Countries;NEPAL;NPL;;Enabled
+Passport Countries;NETHERLANDS;NLD;;Enabled
+Passport Countries;NEW ZEALAND;NZL;;Enabled
+Passport Countries;OMAN;OMN;;Enabled
+Passport Countries;PAKISTAN;PAK;;Enabled
+Passport Countries;PALAU;PLW;;Enabled
+Passport Countries;PALESTINIAN AUTHORITY;PSE;;Enabled
+Passport Countries;PANAMA;PAN;;Enabled
+Passport Countries;PAPUA NEW GUINEA;PNG;;Enabled
+Passport Countries;ALBANIA;ALB;;Enabled
+Passport Countries;ALGERIA;DZA;;Enabled
+Passport Countries;ANDORRA;AND;;Enabled
+Passport Countries;AUSTRIA;AUT;;Enabled
+Passport Countries;BAHRAIN;BHR;;Enabled
+Passport Countries;BANGLADESH;BGD;;Enabled
+Passport Countries;BELARUS;BLR;;Enabled
+Passport Countries;BENIN;BEN;;Enabled
+Passport Countries;BHUTAN;BTN;;Enabled
+Passport Countries;BOSNIA AND HERZEGOVINA;BIH;;Enabled
+Passport Countries;BRUNEI;BRN;;Enabled
+Passport Countries;BULGARIA;BGR;;Enabled
+Passport Countries;BURUNDI;BDI;;Enabled
+Passport Countries;CAMBODIA;KHM;;Enabled
+Passport Countries;CENTRAL AFRICAN REPUBLIC;CAF;;Enabled
+Passport Countries;CHILE;CHL;;Enabled
+Passport Countries;CHINA;CHN;;Enabled
+Passport Countries;CONGO, DEMOCRATIC REPUBLIC OF THE;COD;;Enabled
+Passport Countries;GUYANA;GUY;;Enabled
+Passport Countries;HONDURAS;HND;;Enabled
+Passport Countries;ICELAND;ISL;;Enabled
+Passport Countries;IRAN, ISLAMIC REPUBLIC OF;IRN;;Enabled
+Passport Countries;AFGHANISTAN;AFG;;Enabled
+Passport Countries;ANGOLA;AGO;;Enabled
+Passport Countries;ANTIGUA AND BARBUDA;ATG;;Enabled
+Passport Countries;ARGENTINA;ARG;;Enabled
+Passport Countries;ARMENIA;ARM;;Enabled
+Passport Countries;AUSTRALIA;AUS;;Enabled
+Passport Countries;AZERBAIJAN;AZE;;Enabled
+Passport Countries;BAHAMAS;BHS;;Enabled
+Passport Countries;BARBADOS;BRB;;Enabled
+Passport Countries;BELGIUM;BEL;;Enabled
+Passport Countries;BELIZE;BLZ;;Enabled
+Passport Countries;BOLIVIA, PLURINATIONAL STATE OF;BOL;;Enabled
+Passport Countries;BOTSWANA;BWA;;Enabled
+Passport Countries;BRAZIL;BRA;;Enabled
+Passport Countries;BURKINA FASO;BFA;;Enabled
+Passport Countries;BURMA (MYANMAR);MMR;;Enabled
+Passport Countries;CAMEROON;CMR;;Enabled
+Passport Countries;CANADA;CAN;;Enabled
+Passport Countries;CAPE VERDE;CPV;;Enabled
+Passport Countries;CHAD;TCD;;Enabled
+Passport Countries;COLOMBIA;COL;;Enabled
+Passport Countries;COMOROS;COM;;Enabled
+Passport Countries;COSTA RICA;CRI;;Enabled
+Passport Countries;COTE D'IVOIRE (IVORY COAST);CIV;;Enabled
+Passport Countries;CUBA;CUB;;Enabled
+Passport Countries;CZECH REPUBLIC;CZE;;Enabled
+Passport Countries;DJIBOUTI;DJI;;Enabled
+Passport Countries;DOMINICAN REPUBLIC;DOM;;Enabled
+Passport Countries;EQUATORIAL GUINEA;GNQ;;Enabled
+Passport Countries;ESTONIA;EST;;Enabled
+Passport Countries;ETHIOPIA;ETH;;Enabled
+Passport Countries;FIJI;FJI;;Enabled
+Passport Countries;FINLAND;FIN;;Enabled
+Passport Countries;MOROCCO;MAR;;Enabled
+Passport Countries;MOZAMBIQUE;MOZ;;Enabled
+Passport Countries;NAMIBIA;NAM;;Enabled
+Passport Countries;NAURU;NRU;;Enabled
+Passport Countries;NICARAGUA;NIC;;Enabled
+Passport Countries;NIGER;NER;;Enabled
+Passport Countries;NIGERIA;NGA;;Enabled
+Passport Countries;NORWAY;NOR;;Enabled
+Passport Countries;PARAGUAY;PRY;;Enabled
+Passport Countries;PERU;PER;;Enabled
+Passport Countries;PHILIPPINES;PHL;;Enabled
+Passport Countries;POLAND;POL;;Enabled
+Passport Countries;PORTUGAL;PRT;;Enabled
+Passport Countries;QATAR;QAT;;Enabled
+Passport Countries;ROMANIA;ROU;;Enabled
+Passport Countries;RUSSIA;RUS;;Enabled
+Passport Countries;RWANDA;RWA;;Enabled
+Passport Countries;SAINT KITTS AND NEVIS;KNA;;Enabled
+Passport Countries;SAINT LUCIA;LCA;;Enabled
+Passport Countries;SAINT VINCENT AND THE GRENADINES;VCT;;Enabled
+Passport Countries;SAMOA;WSM;;Enabled
+Passport Countries;SAN MARINO;SMR;;Enabled
+Passport Countries;SAO TOME AND PRINCIPE;STP;;Enabled
+Passport Countries;SAUDI ARABIA;SAU;;Enabled
+Passport Countries;SENEGAL;SEN;;Enabled
+Passport Countries;SERBIA;SRB;;Enabled
+Passport Countries;SEYCHELLES;SYC;;Enabled
+Passport Countries;SIERRA LEONE;SLE;;Enabled
+Passport Countries;SINGAPORE;SGP;;Enabled
+Passport Countries;SLOVAKIA;SVK;;Enabled
+Passport Countries;SLOVENIA;SVN;;Enabled
+Passport Countries;SOLOMON ISLANDS;SLB;;Enabled
+Passport Countries;SOMALIA;SOM;;Enabled
+Passport Countries;SOUTH AFRICA;ZAF;;Enabled
+Passport Countries;SOUTH SUDAN;SSD;;Enabled
+Passport Countries;SPAIN;ESP;;Enabled
+Passport Countries;ISRAEL;ISR;;Enabled
+Passport Countries;ITALY;ITA;;Enabled
+Passport Countries;JAMAICA;JAM;;Enabled
+Passport Countries;JORDAN;JOR;;Enabled
+Passport Countries;KAZAKHSTAN;KAZ;;Enabled
+Passport Countries;KENYA;KEN;;Enabled
+Passport Countries;KIRIBATI;KIR;;Enabled
+Passport Countries;KOREA, DEMOCRATIC REPUBLIC OF (NORTH);PRK;;Enabled
+Passport Countries;LAOS;LAO;;Enabled
+Passport Countries;LIBERIA;LBR;;Enabled
+Passport Countries;LIBYA;LBY;;Enabled
+Passport Countries;LIECHTENSTEIN;LIE;;Enabled
+Passport Countries;LUXEMBOURG;LUX;;Enabled
+Passport Countries;MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF;MKD;;Enabled
+Passport Countries;MADAGASCAR;MDG;;Enabled
+Passport Countries;MALAWI;MWI;;Enabled
+Passport Countries;MALDIVES;MDV;;Enabled
+Passport Countries;MALI;MLI;;Enabled
+Passport Countries;MALTA;MLT;;Enabled
+Passport Countries;MARSHALL ISLANDS, REPUBLIC OF THE;MHL;;Enabled
+Passport Countries;MAURITIUS;MUS;;Enabled
+Passport Countries;MICRONESIA, FEDERATED STATES OF;FSM;;Enabled
+Passport Countries;MOLDOVA, REPUBLIC OF;MDA;;Enabled
+Passport Countries;MONGOLIA;MNG;;Enabled
+Passport Countries;MONTENEGRO;MNE;;Enabled
+Passport Countries;SRI LANKA;LKA;;Enabled
+Passport Countries;SUDAN;SDN;;Enabled
+Passport Countries;SURINAME;SUR;;Enabled
+Passport Countries;SWAZILAND;SWZ;;Enabled
+Passport Countries;SWEDEN;SWE;;Enabled
+Passport Countries;SWITZERLAND;CHE;;Enabled
+Passport Countries;SYRIA;SYR;;Enabled
+Passport Countries;TAIWAN;TWN;;Enabled
+Passport Countries;TAJIKISTAN;TJK;;Enabled
+Passport Countries;TANZANIA, UNITED REPUBLIC OF;TZA;;Enabled
+Passport Countries;THAILAND;THA;;Enabled
+Passport Countries;TIMO;TLS;;Enabled
+Passport Countries;TOGO;TGO;;Enabled
+Passport Countries;TONGA;TON;;Enabled
+Passport Countries;TRINIDAD AND TOBAGO;TTO;;Enabled
+Passport Countries;TUNISIA;TUN;;Enabled
+Passport Countries;TURKEY;TUR;;Enabled
+Passport Countries;TURKMENISTAN;TKM;;Enabled
+Passport Countries;TUVALU;TUV;;Enabled
+Passport Countries;UGANDA;UGA;;Enabled
+Passport Countries;UKRAINE;UKR;;Enabled
+Passport Countries;UNITED ARAB EMIRATES;ARE;;Enabled
+Passport Countries;UNITED KINGDOM;GBR;;Enabled
+Passport Countries;URUGUAY;URY;;Enabled
+Passport Countries;UZBEKISTAN;UZB;;Enabled
+Passport Countries;VANUATU;VUT;;Enabled
+Passport Countries;VENEZUELA, BOLIVARIAN REPUBLIC OF;VEN;;Enabled
+Passport Countries;VIET NAM;VNM;;Enabled
+Passport Countries;YEMEN;YEM;;Enabled
+Passport Countries;ZAMBIA;ZMB;;Enabled
+Passport Countries;ZIMBABWE;ZWE;;Enabled
+Passport Countries;FRANCE;FRA;;Enabled
+Passport Countries;INDONESIA;IDN;;Enabled
+Passport Countries;IRELAND;IRL;;Enabled
+Passport Countries;GAMBIA;GMB;;Enabled
+Passport Countries;GEORGIA;GEO;;Enabled
+Passport Countries;GERMANY;DEU;;Enabled
+Passport Countries;GHANA;GHA;;Enabled
+Passport Countries;GRENADA;GRD;;Enabled
+Passport Countries;GUINEA;GIN;;Enabled
+Passport Countries;GUINE;GNB;;Enabled
+Passport Countries;HAITI;HTI;;Enabled
+Passport Countries;HOLY SEE (VATICAN CITY STATE);VAT;;Enabled
+Passport Countries;HUNGARY;HUN;;Enabled
+Passport Countries;INDIA;IND;;Enabled
+Passport Countries;CONGO, REPUBLIC OF THE;COG;;Enabled
+Passport Countries;CROATIA;HRV;;Enabled
+Passport Countries;CYPRUS;CYP;;Enabled
+Passport Countries;DENMARK;DNK;;Enabled
+Passport Countries;DOMINICA;DMA;;Enabled
+Passport Countries;ECUADOR;ECU;;Enabled
+Passport Countries;EGYPT;EGY;;Enabled
+Passport Countries;EL SALVADOR;SLV;;Enabled
+Passport Countries;ERITREA;ERI;;Enabled
+Passport Countries;GABON;GAB;;Enabled
+Passport Countries;GREECE;GRC;;Enabled
