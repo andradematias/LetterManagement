@@ -1,1 +1,0 @@
-VV.Form.Template.PrintLetter();
